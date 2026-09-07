@@ -5,156 +5,301 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>NATALITH — Destek</title>
 <meta name="description" content="NATALITH iOS uygulaması için destek ve iletişim sayfası.">
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="favicon.png">
+<meta property="og:title" content="NATALITH — Burçlar ve Doğal Taşlar">
+<meta property="og:description" content="NATALITH iOS uygulaması için destek ve iletişim sayfası.">
+<meta property="og:image" content="logo.png">
+<meta name="theme-color" content="#080B17">
 <style>
   :root{
-    --bg-deep:#080B17; --bg-mid:#1A1D3A; --surface:rgba(33,29,67,.55);
-    --gold:#E7C27A; --violet:#B49BFF; --text:#F2F1F7; --muted:rgba(242,241,247,.62);
-    --line:rgba(255,255,255,.10);
+    --bg-deep:#080B17; --surface:rgba(38,33,76,.55); --surface-hi:rgba(48,42,94,.62);
+    --gold:#E7C27A; --violet:#B49BFF; --blush:#F0A8C4;
+    --text:#F2F1F7; --muted:rgba(242,241,247,.66);
+    --line:rgba(255,255,255,.10); --line-warm:rgba(231,194,122,.28);
   }
   *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
   body{
     margin:0; padding:0; background:var(--bg-deep); color:var(--text);
     font:16px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
-    background-image:radial-gradient(ellipse 80% 60% at 50% -10%, #2A2352 0%, transparent 60%),
-                     radial-gradient(ellipse 60% 50% at 90% 20%, #14284A 0%, transparent 55%);
+    background-image:
+      radial-gradient(ellipse 80% 60% at 50% -10%, #2E2660 0%, transparent 60%),
+      radial-gradient(ellipse 60% 50% at 92% 18%, #163055 0%, transparent 55%),
+      radial-gradient(ellipse 70% 45% at 6% 78%, #2A1C46 0%, transparent 58%);
     background-attachment:fixed;
+    -webkit-font-smoothing:antialiased;
   }
-  .wrap{max-width:720px;margin:0 auto;padding:56px 22px 80px}
-  header{text-align:center;margin-bottom:48px}
-  .glyph{
-    width:96px;height:96px;margin:0 auto 22px;border-radius:24px;
-    background:linear-gradient(145deg,#2B2260,#151033);
-    border:1px solid rgba(231,194,122,.35);
-    display:flex;align-items:center;justify-content:center;font-size:44px;
-    box-shadow:0 18px 50px rgba(231,194,122,.16);
+
+  /* A few quiet stars behind everything. */
+  body::before{
+    content:""; position:fixed; inset:0; pointer-events:none; z-index:0;
+    background-image:
+      radial-gradient(1.4px 1.4px at 12% 18%, rgba(255,255,255,.55), transparent),
+      radial-gradient(1.2px 1.2px at 78% 12%, rgba(231,194,122,.50), transparent),
+      radial-gradient(1.6px 1.6px at 62% 34%, rgba(255,255,255,.38), transparent),
+      radial-gradient(1.2px 1.2px at 24% 62%, rgba(180,155,255,.50), transparent),
+      radial-gradient(1.4px 1.4px at 88% 66%, rgba(255,255,255,.42), transparent),
+      radial-gradient(1.2px 1.2px at 42% 86%, rgba(231,194,122,.38), transparent);
+    animation:twinkle 7s ease-in-out infinite;
   }
-  h1{font-size:2rem;margin:0 0 8px;letter-spacing:-.01em}
-  .tagline{color:var(--gold);letter-spacing:.16em;font-size:.75rem;font-weight:700;text-transform:uppercase}
-  h2{font-size:1.15rem;margin:0 0 14px;color:#fff}
+  @keyframes twinkle{0%,100%{opacity:.55}50%{opacity:1}}
+
+  .wrap{position:relative; z-index:1; max-width:720px; margin:0 auto; padding:56px 22px 80px}
+
+  /* ---- Header ---- */
+  header{text-align:center;margin-bottom:34px}
+  .logo{
+    position:relative; width:132px; height:132px; margin:0 auto 22px;
+    animation:float 6s ease-in-out infinite;
+  }
+  .logo::after{ /* soft halo */
+    content:""; position:absolute; inset:-18%; border-radius:50%; z-index:-1;
+    background:radial-gradient(circle, rgba(231,194,122,.30) 0%, rgba(180,155,255,.14) 45%, transparent 70%);
+    filter:blur(10px);
+  }
+  .logo img{
+    width:100%; height:100%; display:block; border-radius:30px;
+    border:1px solid var(--line-warm);
+    box-shadow:0 20px 46px rgba(10,6,30,.62), 0 0 0 6px rgba(231,194,122,.06);
+  }
+  @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+
+  h1{font-size:2.1rem;margin:0 0 10px;letter-spacing:.02em;font-weight:700}
+  .tagline{
+    display:inline-block; padding:6px 16px; border-radius:999px;
+    background:rgba(231,194,122,.10); border:1px solid var(--line-warm);
+    color:var(--gold); letter-spacing:.13em; font-size:.7rem; font-weight:700; text-transform:uppercase;
+  }
+
+  /* ---- Language pills ---- */
+  .lang{display:flex;justify-content:center;gap:8px;margin-bottom:30px}
+  .lang button{
+    font:inherit; font-size:.85rem; font-weight:600; cursor:pointer;
+    padding:7px 18px; border-radius:999px; color:var(--muted);
+    background:rgba(255,255,255,.04); border:1px solid var(--line);
+    transition:transform .18s ease, background .18s ease, color .18s ease, border-color .18s ease;
+  }
+  .lang button:hover{transform:translateY(-1px);color:var(--text)}
+  .lang button[aria-pressed="true"]{
+    background:rgba(180,155,255,.16); border-color:rgba(180,155,255,.42); color:#DCD2FF;
+  }
+
+  /* ---- Cards ---- */
   .card{
-    background:var(--surface);border:1px solid var(--line);border-radius:20px;
-    padding:24px 26px;margin-bottom:18px;backdrop-filter:blur(12px);
+    background:var(--surface); border:1px solid var(--line); border-radius:26px;
+    padding:26px 28px; margin-bottom:18px; backdrop-filter:blur(14px);
+    box-shadow:0 12px 34px rgba(6,4,18,.34);
+    transition:transform .22s ease, border-color .22s ease;
   }
+  .card:hover{transform:translateY(-2px); border-color:rgba(255,255,255,.16)}
+  h2{font-size:1.15rem;margin:0 0 14px;color:#fff;display:flex;align-items:center;gap:9px}
+  h2 .ico{font-size:1.15rem;line-height:1}
   p{margin:0 0 12px;color:var(--muted)}
   p:last-child{margin-bottom:0}
   a{color:var(--gold)}
-  ul{margin:0;padding-left:20px;color:var(--muted)}
-  li{margin-bottom:9px}
-  li:last-child{margin-bottom:0}
-  .q{color:#fff;font-weight:600;display:block;margin-bottom:3px}
+
   .mail{
-    display:inline-block;margin-top:6px;padding:13px 24px;border-radius:14px;
-    background:var(--gold);color:#0E0B1E;font-weight:700;text-decoration:none;
+    display:inline-block; margin-top:8px; padding:14px 26px; border-radius:999px;
+    background:linear-gradient(135deg,#F0D2A0,#E7C27A); color:#14102A;
+    font-weight:700; text-decoration:none; letter-spacing:.01em;
+    box-shadow:0 10px 24px rgba(231,194,122,.26);
+    transition:transform .18s ease, box-shadow .18s ease;
   }
-  footer{margin-top:40px;text-align:center;font-size:.8rem;color:rgba(242,241,247,.38)}
+  .mail:hover{transform:translateY(-2px) scale(1.02); box-shadow:0 14px 30px rgba(231,194,122,.36)}
+  .mail-note{margin-top:14px;font-size:.86rem;color:rgba(242,241,247,.5)}
+  .mail-note a{color:rgba(242,241,247,.7)}
+
+  /* ---- FAQ accordions ---- */
+  details{
+    border-radius:18px; border:1px solid var(--line); background:rgba(255,255,255,.03);
+    margin-bottom:10px; overflow:hidden;
+    transition:border-color .2s ease, background .2s ease;
+  }
+  details:last-child{margin-bottom:0}
+  details[open]{background:var(--surface-hi); border-color:var(--line-warm)}
+  summary{
+    cursor:pointer; list-style:none; padding:15px 18px; padding-right:44px;
+    position:relative; color:#fff; font-weight:600; font-size:.95rem; line-height:1.5;
+  }
+  summary::-webkit-details-marker{display:none}
+  summary:hover{color:var(--gold)}
+  summary::after{
+    content:"+"; position:absolute; right:17px; top:50%; transform:translateY(-50%);
+    width:24px; height:24px; border-radius:50%; display:grid; place-items:center;
+    background:rgba(231,194,122,.14); color:var(--gold); font-weight:700; font-size:1rem;
+    transition:transform .22s ease, background .22s ease;
+  }
+  details[open] summary::after{content:"–"; transform:translateY(-50%) rotate(180deg); background:rgba(231,194,122,.24)}
+  details p{padding:0 18px 17px; margin:0; font-size:.94rem}
+
+  footer{margin-top:42px;text-align:center;font-size:.8rem;color:rgba(242,241,247,.38)}
   footer a{color:rgba(242,241,247,.55)}
-  .lang{text-align:center;margin-bottom:26px;font-size:.85rem}
-  .lang a{margin:0 8px;color:var(--violet);text-decoration:none}
-  [lang=en]{display:none}
+  .heart{color:var(--blush)}
+
+  /* ---- Bilingual switch ---- */
+  /* Scoped to descendants of body: <html lang> must never match, or the
+     whole document disappears the moment the switch sets it. */
+  body [lang=en]{display:none}
   body.en [lang=tr]{display:none}
-  body.en [lang=en]{display:block}
-  body.en li[lang=en],body.en span[lang=en]{display:list-item}
-  body.en span[lang=en]{display:block}
+  body.en [lang=en]{display:revert}
+
+  @media (max-width:520px){
+    .wrap{padding:42px 18px 64px}
+    .logo{width:112px;height:112px}
+    h1{font-size:1.8rem}
+    .card{padding:22px 20px;border-radius:22px}
+  }
+  @media (prefers-reduced-motion:reduce){
+    *{animation:none !important; transition:none !important}
+    html{scroll-behavior:auto}
+  }
 </style>
 </head>
 <body>
 <div class="wrap">
 
   <header>
-    <div class="glyph">🌙</div>
+    <div class="logo">
+      <img src="logo.png" width="512" height="512"
+           alt="NATALITH — hilal ve kristal logosu / crescent and crystal logo">
+    </div>
     <h1>NATALITH</h1>
     <div class="tagline" lang="tr">Burçlar ve Doğal Taşlar</div>
     <div class="tagline" lang="en">Zodiac &amp; Gemstone Guide</div>
   </header>
 
   <div class="lang">
-    <a href="#" onclick="document.body.classList.remove('en');return false">Türkçe</a>·
-    <a href="#" onclick="document.body.classList.add('en');return false">English</a>
+    <button type="button" id="btn-tr" aria-pressed="true">Türkçe</button>
+    <button type="button" id="btn-en" aria-pressed="false">English</button>
   </div>
 
   <div class="card">
     <div lang="tr">
-      <h2>Destek</h2>
-      <p>NATALITH hakkında sorun, öneriniz veya bir hata bildiriminiz varsa doğrudan
+      <h2><span class="ico">💌</span> Destek</h2>
+      <p>NATALITH hakkında sorunuz, öneriniz ya da bir hata bildiriminiz varsa doğrudan
          yazabilirsiniz. Genellikle birkaç gün içinde dönüş yapılır.</p>
-      <a class="mail" href="mailto:sezerkusku3@gmail.com?subject=NATALITH%20Destek">E-posta gönder</a>
+      <a class="mail" href="mailto:hello.scannerstudio@gmail.com?subject=NATALITH%20Destek">E-posta gönder</a>
+      <p class="mail-note">veya doğrudan:
+         <a href="mailto:hello.scannerstudio@gmail.com">hello.scannerstudio@gmail.com</a></p>
     </div>
     <div lang="en">
-      <h2>Support</h2>
+      <h2><span class="ico">💌</span> Support</h2>
       <p>If you have a question, a suggestion, or a bug to report about NATALITH,
          write directly. Replies usually come within a few days.</p>
-      <a class="mail" href="mailto:sezerkusku3@gmail.com?subject=NATALITH%20Support">Send an email</a>
+      <a class="mail" href="mailto:hello.scannerstudio@gmail.com?subject=NATALITH%20Support">Send an email</a>
+      <p class="mail-note">or write to:
+         <a href="mailto:hello.scannerstudio@gmail.com">hello.scannerstudio@gmail.com</a></p>
     </div>
   </div>
 
   <div class="card">
     <div lang="tr">
-      <h2>Sık sorulanlar</h2>
-      <ul>
-        <li><span class="q">Satın aldığım "Tam Erişim" yeni telefonuma geldi mi?</span>
-            Evet. Satın alma Apple Kimliğinize bağlıdır. Yeni cihazda aynı Apple Kimliğiyle
-            giriş yapmanız yeterli; gerekirse taş sayfasındaki "Satın alımları geri yükle"
-            seçeneğini kullanın.</li>
-        <li><span class="q">Kaydettiğim taşlar ve doğum tarihim neden yeni cihazımda yok?</span>
-            Bu bilgiler yalnızca cihazınızda saklanır ve hiçbir sunucuya gönderilmez.
-            Cihaz değiştirdiğinizde doğum tarihinizi yeniden girmeniz gerekir.</li>
-        <li><span class="q">Uygulama internet olmadan çalışıyor mu?</span>
-            Evet. Burç yorumu, ay evresi, taşlar ve koleksiyon tamamen çevrimdışı çalışır.
-            Bağlantı yalnızca satın alma ve satın almayı geri yükleme için gerekir.</li>
-        <li><span class="q">Günlük hatırlatıcı gelmiyor.</span>
-            iOS Ayarlar → Bildirimler → NATALITH yolundan bildirimlere izin verildiğinden
-            emin olun. İzin bir kez reddedildiyse uygulama tekrar soramaz.</li>
-        <li><span class="q">Apple Watch complication'ım güncellenmiyor.</span>
-            Günün taşı iPhone'da hesaplanıp saatinize aktarılır, bu yüzden telefondaki
-            uygulamayı bir kez açmanız yeterlidir. Saat ve telefon aynı Apple Kimliğine
-            bağlı ve eşleşmiş olmalıdır.</li>
-        <li><span class="q">Taşa yazdığım not nerede saklanıyor?</span>
-            Yalnızca telefonunuzda. Not ve edinme tarihi saate gönderilmez, hiçbir sunucuya
-            yüklenmez ve yedeklenmez; uygulamayı silerseniz kaybolur.</li>
-        <li><span class="q">Taşların sağlık üzerinde etkisi var mı?</span>
-            Hayır. Uygulamadaki içerik eğlence ve kültürel amaçlıdır; taşlar hiçbir hastalığı
-            teşhis etmez, tedavi etmez veya önlemez. Sağlık konularında hekiminize danışın.</li>
-      </ul>
+      <h2><span class="ico">✨</span> Sık sorulanlar</h2>
+
+      <details>
+        <summary>Satın aldığım “Tam Erişim” yeni telefonuma geldi mi?</summary>
+        <p>Evet. Satın alma Apple Kimliğinize bağlıdır. Yeni cihazda aynı Apple Kimliğiyle
+           giriş yapmanız yeterli; gerekirse taş sayfasındaki “Satın alımları geri yükle”
+           seçeneğini kullanın.</p>
+      </details>
+
+      <details>
+        <summary>Kaydettiğim taşlar ve doğum tarihim neden yeni cihazımda yok?</summary>
+        <p>Bu bilgiler yalnızca cihazınızda saklanır ve hiçbir sunucuya gönderilmez.
+           Cihaz değiştirdiğinizde doğum tarihinizi yeniden girmeniz gerekir.</p>
+      </details>
+
+      <details>
+        <summary>Uygulama internet olmadan çalışıyor mu?</summary>
+        <p>Evet. Burç yorumu, ay evresi, taşlar ve koleksiyon tamamen çevrimdışı çalışır.
+           Bağlantı yalnızca satın alma ve satın almayı geri yükleme için gerekir.</p>
+      </details>
+
+      <details>
+        <summary>Günlük hatırlatıcı gelmiyor.</summary>
+        <p>iOS Ayarlar → Bildirimler → NATALITH yolundan bildirimlere izin verildiğinden
+           emin olun. İzin bir kez reddedildiyse uygulama tekrar soramaz.</p>
+      </details>
+
+      <details>
+        <summary>Apple Watch complication’ım güncellenmiyor.</summary>
+        <p>Günün taşı iPhone’da hesaplanıp saatinize aktarılır, bu yüzden telefondaki
+           uygulamayı bir kez açmanız yeterlidir. Saat ve telefon aynı Apple Kimliğine
+           bağlı ve eşleşmiş olmalıdır.</p>
+      </details>
+
+      <details>
+        <summary>Taşa yazdığım not nerede saklanıyor?</summary>
+        <p>Yalnızca telefonunuzda. Not ve edinme tarihi saate gönderilmez, hiçbir sunucuya
+           yüklenmez ve yedeklenmez; uygulamayı silerseniz kaybolur.</p>
+      </details>
+
+      <details>
+        <summary>Taşların sağlık üzerinde etkisi var mı?</summary>
+        <p>Hayır. Uygulamadaki içerik eğlence ve kültürel amaçlıdır; taşlar hiçbir hastalığı
+           teşhis etmez, tedavi etmez veya önlemez. Sağlık konularında hekiminize danışın.</p>
+      </details>
     </div>
+
     <div lang="en">
-      <h2>Frequently asked</h2>
-      <ul>
-        <li><span class="q">Did my "Full Access" purchase carry over to my new phone?</span>
-            Yes. The purchase is tied to your Apple Account. Sign in with the same Apple
-            Account on the new device; if needed, use "Restore purchases" on the stone page.</li>
-        <li><span class="q">Why are my saved stones and birth date missing on my new device?</span>
-            That information is kept only on your device and is never sent to a server, so
-            you will need to enter your birth date again after switching devices.</li>
-        <li><span class="q">Does the app work without internet?</span>
-            Yes. The reading, the moon phase, the stones, and your collection all work
-            offline. A connection is needed only to buy Full Access or restore it.</li>
-        <li><span class="q">The daily reminder isn't arriving.</span>
-            Check iOS Settings → Notifications → NATALITH and make sure notifications are
-            allowed. Once permission is denied, the app cannot ask again.</li>
-        <li><span class="q">My Apple Watch complication is not updating.</span>
-            The day's stone is worked out on the iPhone and passed to the watch, so opening
-            the app on the phone once is enough. The watch and the phone have to be paired
-            and on the same Apple Account.</li>
-        <li><span class="q">Where is the note I wrote about a stone kept?</span>
-            On your phone only. The note and its date are never sent to the watch, uploaded
-            to any server, or backed up; deleting the app deletes them.</li>
-        <li><span class="q">Do the stones have health effects?</span>
-            No. The content is for entertainment and cultural purposes; stones do not diagnose,
-            treat, or prevent any illness. Consult a physician on health matters.</li>
-      </ul>
+      <h2><span class="ico">✨</span> Frequently asked</h2>
+
+      <details>
+        <summary>Did my “Full Access” purchase carry over to my new phone?</summary>
+        <p>Yes. The purchase is tied to your Apple Account. Sign in with the same Apple
+           Account on the new device; if needed, use “Restore purchases” on the stone page.</p>
+      </details>
+
+      <details>
+        <summary>Why are my saved stones and birth date missing on my new device?</summary>
+        <p>That information is kept only on your device and is never sent to a server, so
+           you will need to enter your birth date again after switching devices.</p>
+      </details>
+
+      <details>
+        <summary>Does the app work without internet?</summary>
+        <p>Yes. The reading, the moon phase, the stones, and your collection all work
+           offline. A connection is needed only to buy Full Access or restore it.</p>
+      </details>
+
+      <details>
+        <summary>The daily reminder isn’t arriving.</summary>
+        <p>Check iOS Settings → Notifications → NATALITH and make sure notifications are
+           allowed. Once permission is denied, the app cannot ask again.</p>
+      </details>
+
+      <details>
+        <summary>My Apple Watch complication is not updating.</summary>
+        <p>The day’s stone is worked out on the iPhone and passed to the watch, so opening
+           the app on the phone once is enough. The watch and the phone have to be paired
+           and on the same Apple Account.</p>
+      </details>
+
+      <details>
+        <summary>Where is the note I wrote about a stone kept?</summary>
+        <p>On your phone only. The note and its date are never sent to the watch, uploaded
+           to any server, or backed up; deleting the app deletes them.</p>
+      </details>
+
+      <details>
+        <summary>Do the stones have health effects?</summary>
+        <p>No. The content is for entertainment and cultural purposes; stones do not diagnose,
+           treat, or prevent any illness. Consult a physician on health matters.</p>
+      </details>
     </div>
   </div>
 
   <div class="card">
     <div lang="tr">
-      <h2>Gizlilik</h2>
+      <h2><span class="ico">🔒</span> Gizlilik</h2>
       <p>NATALITH hiçbir kişisel veri toplamaz, saklamaz veya aktarmaz. Girdiğiniz her
          şey yalnızca cihazınızda kalır.</p>
       <p><a href="privacy.html">Gizlilik politikasının tamamını oku →</a></p>
       <p><a href="terms.html">Kullanım koşulları →</a></p>
     </div>
     <div lang="en">
-      <h2>Privacy</h2>
+      <h2><span class="ico">🔒</span> Privacy</h2>
       <p>NATALITH collects, stores, and transmits no personal data. Everything you enter
          stays on your own device.</p>
       <p><a href="privacy.html">Read the full privacy policy →</a></p>
@@ -163,15 +308,30 @@
   </div>
 
   <footer>
+    <p lang="tr">Yıldızların altında <span class="heart">♥</span> ile yapıldı</p>
+    <p lang="en">Made under the stars with <span class="heart">♥</span></p>
     © 2026 Sezer Kuşku · <a href="privacy.html">Gizlilik / Privacy</a> ·
     <a href="terms.html">Koşullar / Terms</a>
   </footer>
 
 </div>
 <script>
-  if ((navigator.language || "").toLowerCase().indexOf("tr") !== 0) {
-    document.body.classList.add("en");
-  }
+  (function () {
+    var trBtn = document.getElementById("btn-tr");
+    var enBtn = document.getElementById("btn-en");
+
+    function setLang(en) {
+      document.body.classList.toggle("en", en);
+      document.documentElement.lang = en ? "en" : "tr";
+      trBtn.setAttribute("aria-pressed", String(!en));
+      enBtn.setAttribute("aria-pressed", String(en));
+    }
+
+    trBtn.addEventListener("click", function () { setLang(false); });
+    enBtn.addEventListener("click", function () { setLang(true); });
+
+    setLang((navigator.language || "").toLowerCase().indexOf("tr") !== 0);
+  })();
 </script>
 </body>
 </html>
